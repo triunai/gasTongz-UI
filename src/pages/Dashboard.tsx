@@ -1,6 +1,7 @@
 // src/pages/Dashboard.tsx
 import React, { useState } from 'react';
 import MetricCard from '../components/MetricCard';
+import SalesTable from '../components/SalesTable';
 
 const Dashboard: React.FC = () => {
 
@@ -12,7 +13,7 @@ const Dashboard: React.FC = () => {
   
   return (
     <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-semibold mb-4">Welcome, Admin!</h2>
+      <h2 className="font-playfair text-2xl font-semibold mb-4">🙏Vanakkam Da Mapillai🙏</h2>
       <p className="text-gray-700">
         This is your dashboard. Here you'll eventually see key metrics, inventory stats, and sales data.
       </p>
@@ -22,6 +23,7 @@ const Dashboard: React.FC = () => {
         <MetricCard key={card.title} title={card.title} value={card.value} />
       ))}
       </div>
+      <SalesTable/>
 
     </div>
   );

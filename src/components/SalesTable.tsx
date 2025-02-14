@@ -43,7 +43,7 @@ return (
         </thead>
         <tbody className="border-t border-gray-200">
           {transactions.map((t) => (
-            <tr key={t.id} className="hover:bg-gray-50 text-center">
+            <tr key={t.id} className="hover:bg-gray-300 text-center">
               <td className="py-4 px-6 border-r border-gray-200">{t.id}</td>
               <td className="py-4 px-6 border-r border-gray-200">{new Date(t.date).toLocaleDateString()}</td>
               <td className="py-4 px-6 border-r border-gray-200">{t.shop.name}</td>

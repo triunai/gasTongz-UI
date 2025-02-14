@@ -1,3 +1,10 @@
 @import "tailwindcss";
 
 
+.chart-card {
+  @apply bg-white rounded-lg shadow-lg p-6;
+}
+
+.chart-container {
+  @apply rounded-lg overflow-hidden;
+}

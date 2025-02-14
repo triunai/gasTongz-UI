@@ -4,7 +4,8 @@ import React from 'react';
 const Footer = () => {
   return (
     <footer className="bg-blue-600 text-white text-center py-4">
-      <div className="container mx-auto">
+      {/* fix the min-h-33 later, temp solution */}
+      <div className="sticky w-full min-h-33">
         <p>&copy; {new Date().getFullYear()} GasTongz. All rights reserved.</p>
         <p className="mt-2">
           Built with ❤️ using React, TypeScript, and Tailwind CSS

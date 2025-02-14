@@ -9,12 +9,12 @@ import Footer from './components/Footer';
 function App() {
   return (
     <>
-       <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100">
       <Header />
-      <main className="pt-4">
+        <main>
         <Dashboard />
         </main>
-        <Footer />
+      <Footer />
     </div>
     </>
   )

@@ -29,7 +29,7 @@ const LowStockChart = () => {
   }, []);
 
   return (
-    <div className="w-full p-4 bg-white rounded-lg shadow-md">
+    <div className="w-full p-4 bg-black rounded-lg shadow-md">
       <h3 className="text-xl font-semibold mb-4">Low Stock Alert</h3>
       <Doughnut data={lowStockData} options={{ responsive: true }} />
     </div>

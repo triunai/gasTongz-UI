@@ -7,9 +7,11 @@ interface ChartCardProps {
 }
 
 const ChartCard: React.FC<ChartCardProps> = ({ title, chart }) => (
-  <div className="chart-card">
-    <h3 className="text-lg font-semibold mb-4">{title}</h3>
-    <div className="chart-container">{chart}</div>
+  <div className="bg-gray-850 text-white p-6 rounded-lg shadow-lg-amber-600 border-amber-800">
+    <h3 className="text-xl font-semibold mb-4 border-amber-800">{title}</h3>
+    <div className="chart-container bg-black rounded-lg p-4">
+      {chart}
+    </div>
   </div>
 );
 

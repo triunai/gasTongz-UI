@@ -8,12 +8,12 @@ const Header: React.FC = () => {
 
 
   return (
-    <header className="bg-blue-600 p-4 text-white">
+    <header className="bg-orange-600 p-4 text-white">
       <div className="container mx-auto flex justify-between items-center">
         <h1 className="text-xl font-bold">GasTongz Admin Dashboard</h1>
         <nav className="space-x-4">
           {pages.map(page => (
-            <button className="bg-gray-700 hover:bg-gray-600 p-2 rounded">{page}</button>
+            <button className="bg-black hover:bg-gray-600 p-2 rounded">{page}</button>
           ))}
         </nav>
       </div>

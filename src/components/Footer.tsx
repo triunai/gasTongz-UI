@@ -3,7 +3,7 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="bg-blue-600 text-white text-center py-4">
+    <footer className="bg-orange-500 text-white text-center py-4">
       {/* fix the min-h-33 later, temp solution */}
       <div className="sticky w-full min-h-33">
         <p>&copy; {new Date().getFullYear()} GasTongz. All rights reserved.</p>

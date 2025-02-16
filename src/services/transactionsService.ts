@@ -33,10 +33,10 @@ export const fetchMonthlySales = async (): Promise<MonthlySalesResponse[]> => {
   }
 };
 
-export const fetchRecentTransactions = async (): Promise<TransactionResponse[]> => {
+export const fetchRecentTransactions = async (): Promise<TransactionSummaryResponse[]> => {
   try {
-    const { data } = await API.get('/transactions');
-    return data.Data; // Ensure this matches the TransactionResponse interface
+    const { data } = await API.get('/transactions/recent');
+    return data.Data;
   } catch (error) {
     throw new Error('Failed to fetch recent transactions');
   }

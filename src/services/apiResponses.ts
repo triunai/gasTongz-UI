@@ -23,8 +23,37 @@ export interface TransactionResponse {
   updatedBy: number | null; // From UpdatedBy
 }
 
+
+// src/types/apiResponses.ts
+export interface TransactionSummaryResponse {
+  id: number;
+  shopId: number;
+  transactionDate: string; // ISO 8601 datetime string
+  paymentMethod: string; // Serialized enum value
+  paymentStatus: string; // Serialized enum value
+  totalAmount: number;
+  receiptImagePath: string | null;
+  createdAt: string; // ISO 8601 datetime string
+  createdBy: number | null;
+  updatedAt: string; // ISO 8601 datetime string
+  updatedBy: number | null;
+  transactionDetails: Array<{
+    id: number;
+    productId: number;
+    quantity: number;
+    unitPrice: number;
+    createdAt: string; // ISO 8601 datetime string
+    createdBy: number | null;
+    updatedAt: string; // ISO 8601 datetime string
+    updatedBy: number | null;
+  }>;
+}
+
+
+// todo: move this to its own folder
 export interface LowStockInventoryResponse {
   productId: number;
   productName: string;
   quantity: number;
 }
+

@@ -1,14 +1,6 @@
 import API from '../api'; // Import your Axios instance
-import { TransactionResponse, TransactionSummaryResponse } from './apiResponses';
-export interface SalesSummaryResponse {
-  totalSales: number;
-  averageTransaction: number;
-}
+import { MonthlySalesResponse, SalesSummaryResponse, TransactionSummaryResponse } from './apiResponses';
 
-export interface MonthlySalesResponse {
-  month: string;
-  salesAmount: number;
-}
 
 
 export const fetchSalesSummary = async (): Promise<SalesSummaryResponse> => {
@@ -22,15 +14,18 @@ export const fetchSalesSummary = async (): Promise<SalesSummaryResponse> => {
 
 export const fetchMonthlySales = async (): Promise<MonthlySalesResponse[]> => {
   try {
-    const { data } = await API.get('/transactions/monthly');
-    return data.Data.map((item: { monthName: string; salesAmount: any; }) => ({
-      name: item.monthName, // Maps to "monthName" from API
-      Sales: item.salesAmount // Maps to "salesAmount" from API
+    const response = await API.get('/transactions/monthly');
+    const rawData = response.data.data; // Array of { monthName, salesAmount, ... }
+    
+    return rawData.map((item: { monthName: string; salesAmount: number }) => ({
+      name: item.monthName,       // e.g., "February 2025"
+      Sales: item.salesAmount      // e.g., 79
     }));
   } catch (error) {
     throw new Error('Failed to fetch monthly sales');
   }
 };
+
 
 
 export const fetchRecentTransactions = async (): Promise<TransactionSummaryResponse[]> => {

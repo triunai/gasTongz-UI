@@ -10,7 +10,7 @@ import { fetchLowStockInventory } from '../services/inventoryService';
 
 const Dashboard: React.FC = () => {
   const [salesSummary, setSalesSummary] = useState<SalesSummaryResponse | null>(null);
-  const [monthlySales, setMonthlySales] = useState<{ name: string; Sales: number }[]>([]);
+  const [monthlySales, setMonthlySales] = useState<MonthlySalesResponse[]>([]);
   const [recentTransactions, setRecentTransactions] = useState<TransactionSummaryResponse[]>([]);
   const [lowStockInventory, setLowStockInventory] = useState<{ name: string; Inventory: number }[]>([]);
 
@@ -20,17 +20,17 @@ const Dashboard: React.FC = () => {
       try {
         const [
           summary,
-          // monthlySalesData,
-          transactions,
-          lowStockInventoryData
+          monthlySalesData,
+          transactions
+          // lowStockInventoryData
         ] = await Promise.all([
           fetchSalesSummary(),
-          // fetchMonthlySales(),
+          fetchMonthlySales(),
           fetchRecentTransactions(),
-          fetchLowStockInventory(),
+          // fetchLowStockInventory(),
         ]);
         setSalesSummary(summary);
-        // setMonthlySales(monthlySales);
+        setMonthlySales(monthlySalesData);
         // setLowStockInventory(lowStockInventory);
         setRecentTransactions(transactions);
       } catch (error) {

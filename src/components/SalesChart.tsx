@@ -16,7 +16,7 @@ const SalesChart = () => {
   });
 
   useEffect(() => {
-    axios.get('/api/sales')
+    axios.get('/transactions')
       .then(response => {
         const { dates, amounts } = response.data;
         setSalesData({

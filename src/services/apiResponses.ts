@@ -5,8 +5,8 @@ export interface SalesSummaryResponse {
 }
 
 export interface MonthlySalesResponse {
-  month: string;
-  salesAmount: number;
+  name: string;
+  Sales: number;
 }
 
 export interface TransactionResponse {
@@ -24,7 +24,6 @@ export interface TransactionResponse {
 }
 
 
-// src/types/apiResponses.ts
 export interface TransactionSummaryResponse {
   id: number;
   shopId: number;
@@ -57,3 +56,13 @@ export interface LowStockInventoryResponse {
   quantity: number;
 }
 
+
+export interface SalesSummaryResponse {
+  totalSales: number;
+  averageTransaction: number;
+}
+
+export interface MonthlySalesResponse {
+  month: string;
+  salesAmount: number;
+}

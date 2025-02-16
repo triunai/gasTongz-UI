@@ -10,36 +10,37 @@ import { fetchLowStockInventory } from '../services/inventoryService';
 
 const Dashboard: React.FC = () => {
   const [salesSummary, setSalesSummary] = useState<SalesSummaryResponse | null>(null);
-  const [monthlySales, setMonthlySales] = useState<MonthlySalesResponse[]>([]);
+  const [monthlySales, setMonthlySales] = useState<{ name: string; Sales: number }[]>([]);
   const [recentTransactions, setRecentTransactions] = useState<TransactionResponse[]>([]);
-  const [lowStockInventory, setLowStockInventory] = useState<LowStockInventoryResponse[]>([]);
+  const [lowStockInventory, setLowStockInventory] = useState<{ name: string; Inventory: number }[]>([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [
-          summary,
-          sales,
-          transactions,
-          lowStock
-        ] = await Promise.all([
-          fetchSalesSummary(),
-          fetchMonthlySales(),
-          fetchRecentTransactions(),
-          fetchLowStockInventory(),
-        ]);
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const [
+        summary,
+        monthlySalesData,
+        transactions,
+        lowStockInventoryData
+      ] = await Promise.all([
+        fetchSalesSummary(),
+        fetchMonthlySales(),
+        fetchRecentTransactions(),
+        fetchLowStockInventory(),
+      ]);
 
-        setSalesSummary(summary);
-        setMonthlySales(sales);
-        setRecentTransactions(transactions);
-        setLowStockInventory(lowStock);
-      } catch (error) {
-        console.error('Error fetching dashboard data:', error);
-      }
-    };
 
-    fetchData();
-  }, []);
+      setSalesSummary(summary);
+      setMonthlySales(monthlySales);
+      setLowStockInventory(lowStockInventory);
+      setRecentTransactions(transactions);
+    } catch (error) {
+      console.error('Error fetching dashboard data:', error);
+    }
+  };
+
+  fetchData();
+}, []);
 
   const cards = [
     { 
@@ -61,7 +62,29 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="w-full mx-auto p-4 bg-gradient-to-r from-zinc-900 to-slate-800">
-      {/* ... rest of your component */}
+      <h2 className="font-playfair text-2xl font-semibold mb-4 text-orange-500">🙏Vanakkam Da Mapillai🙏</h2>
+      <p className="text-white">
+        This is your dashboard. Here you'll eventually see key metrics, inventory stats, and sales data.
+      </p>
+      <div className='my-5'></div>
+      <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-5">
+        {cards.map((card) => (
+          <MetricCard key={card.title} title={card.title} value={card.value} />
+        ))}
+      </div>
+
+      <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 mt-5">
+        <ChartCard
+          title="Q1 Sales Trend"
+          chart={<LineChart data={monthlySales} />}
+        />
+        <ChartCard
+          title="Inventory Levels"
+          chart={<BarChart data={lowStockInventory} />}
+        />
+      </div>
+
+      <SalesTable data={recentTransactions} />
     </div>
   );
 };

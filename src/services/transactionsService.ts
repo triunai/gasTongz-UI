@@ -1,5 +1,5 @@
 import API from '../api'; // Import your Axios instance
-
+import { TransactionResponse } from './apiResponses';
 export interface SalesSummaryResponse {
   totalSales: number;
   averageTransaction: number;
@@ -10,14 +10,6 @@ export interface MonthlySalesResponse {
   salesAmount: number;
 }
 
-export interface TransactionResponse {
-  id: number;
-  date: string;
-  shop: string;
-  product: string;
-  quantity: number;
-  total: number;
-}
 
 export const fetchSalesSummary = async (): Promise<SalesSummaryResponse> => {
   try {
@@ -28,10 +20,14 @@ export const fetchSalesSummary = async (): Promise<SalesSummaryResponse> => {
   }
 };
 
+// src/services/transactionsService.ts
 export const fetchMonthlySales = async (): Promise<MonthlySalesResponse[]> => {
   try {
     const { data } = await API.get('/transactions/monthly');
-    return data.Data; // Extract data from ApiResponse
+    return data.Data.map((item: { monthName: string; salesAmount: any; }) => ({
+      name: item.monthName, // Maps to "monthName" from API
+      Sales: item.salesAmount // Maps to "salesAmount" from API
+    }));
   } catch (error) {
     throw new Error('Failed to fetch monthly sales');
   }
@@ -40,7 +36,7 @@ export const fetchMonthlySales = async (): Promise<MonthlySalesResponse[]> => {
 export const fetchRecentTransactions = async (): Promise<TransactionResponse[]> => {
   try {
     const { data } = await API.get('/transactions');
-    return data.Data.slice(0, 10); // Extract and slice data
+    return data.Data; // Ensure this matches the TransactionResponse interface
   } catch (error) {
     throw new Error('Failed to fetch recent transactions');
   }

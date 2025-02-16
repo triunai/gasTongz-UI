@@ -6,7 +6,13 @@ interface LineChartProps {
   data: Array<{ name: string; Sales: number }>;
 }
 
-const LineChart: React.FC<LineChartProps> = ({ data }) => (
+const LineChart: React.FC<LineChartProps> = ({ data }) => {
+  console.log('LineChart data:', data);
+  if (data.length === 0) {
+    return <div>No sales data available, check Api</div>;
+  }
+  return (
+  
   <ResponsiveContainer width="100%" height={200} className="bg-transparent">
     <RechartsLine
       data={data}
@@ -27,5 +33,6 @@ const LineChart: React.FC<LineChartProps> = ({ data }) => (
     </RechartsLine>
   </ResponsiveContainer>
 );
+}; 
 
 export default LineChart;

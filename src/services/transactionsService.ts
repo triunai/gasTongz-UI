@@ -1,5 +1,5 @@
 import API from '../api'; // Import your Axios instance
-import { TransactionResponse } from './apiResponses';
+import { TransactionResponse, TransactionSummaryResponse } from './apiResponses';
 export interface SalesSummaryResponse {
   totalSales: number;
   averageTransaction: number;
@@ -20,7 +20,6 @@ export const fetchSalesSummary = async (): Promise<SalesSummaryResponse> => {
   }
 };
 
-// src/services/transactionsService.ts
 export const fetchMonthlySales = async (): Promise<MonthlySalesResponse[]> => {
   try {
     const { data } = await API.get('/transactions/monthly');
@@ -33,11 +32,15 @@ export const fetchMonthlySales = async (): Promise<MonthlySalesResponse[]> => {
   }
 };
 
+
 export const fetchRecentTransactions = async (): Promise<TransactionSummaryResponse[]> => {
   try {
-    const { data } = await API.get('/transactions/recent');
-    return data.Data;
+    const response = await API.get('/transactions/recent');
+    console.log('API Response:', response); // Log the full API response
+    console.log('API Data:', response.data.data); // Log the `data` field
+    return response.data.data || []; // Explicitly access the nested 'data' field
   } catch (error) {
-    throw new Error('Failed to fetch recent transactions');
+    console.error('Error fetching recent transactions:', error);
+    return []; // Return an empty array on failure
   }
 };

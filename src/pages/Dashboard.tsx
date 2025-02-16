@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SalesSummaryResponse, MonthlySalesResponse, TransactionResponse, LowStockInventoryResponse } from '../services/apiResponses';
+import { SalesSummaryResponse, MonthlySalesResponse, TransactionResponse, LowStockInventoryResponse, TransactionSummaryResponse } from '../services/apiResponses';
 import MetricCard from '../components/MetricCard';
 import SalesTable from '../components/SalesTable';
 import ChartCard from '../components/ChartCard';
@@ -11,36 +11,38 @@ import { fetchLowStockInventory } from '../services/inventoryService';
 const Dashboard: React.FC = () => {
   const [salesSummary, setSalesSummary] = useState<SalesSummaryResponse | null>(null);
   const [monthlySales, setMonthlySales] = useState<{ name: string; Sales: number }[]>([]);
-  const [recentTransactions, setRecentTransactions] = useState<TransactionResponse[]>([]);
+  const [recentTransactions, setRecentTransactions] = useState<TransactionSummaryResponse[]>([]);
   const [lowStockInventory, setLowStockInventory] = useState<{ name: string; Inventory: number }[]>([]);
 
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const [
-        summary,
-        monthlySalesData,
-        transactions,
-        lowStockInventoryData
-      ] = await Promise.all([
-        fetchSalesSummary(),
-        fetchMonthlySales(),
-        fetchRecentTransactions(),
-        fetchLowStockInventory(),
-      ]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [
+          summary,
+          // monthlySalesData,
+          transactions,
+          lowStockInventoryData
+        ] = await Promise.all([
+          fetchSalesSummary(),
+          // fetchMonthlySales(),
+          fetchRecentTransactions(),
+          fetchLowStockInventory(),
+        ]);
+        setSalesSummary(summary);
+        // setMonthlySales(monthlySales);
+        // setLowStockInventory(lowStockInventory);
+        setRecentTransactions(transactions);
+      } catch (error) {
+        console.error('Error fetching dashboard data:', error);
+      }
+    };
+    fetchData();
+  }, []);
 
-      setSalesSummary(summary);
-      setMonthlySales(monthlySales);
-      setLowStockInventory(lowStockInventory);
-      setRecentTransactions(transactions);
-    } catch (error) {
-      console.error('Error fetching dashboard data:', error);
-    }
-  };
-
-  fetchData();
-}, []);
+  useEffect(() => {
+  console.log('Now recentTransactions has updated:', recentTransactions);
+}, [recentTransactions]);
 
   const cards = [
     { 

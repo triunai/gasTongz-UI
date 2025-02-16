@@ -1,15 +1,21 @@
 // src/components/SalesTable.tsx  
 import React from 'react';  
-import { TransactionResponse } from '../services/apiResponses';
 
-
+import { TransactionSummaryResponse } from '../services/apiResponses';
 
 interface SalesTableProps {
-  data: TransactionResponse[];
+  data: TransactionSummaryResponse[];
 }
 
 // src/components/SalesTable.tsx
 const SalesTable: React.FC<SalesTableProps> = ({ data }) => {
+
+    console.log('SalesTable received data:', data); // Log the data prop
+
+  if (data.length === 0) {
+    return <div className="text-white text-center my-8">No transactions found</div>;
+  }
+
   return (
     <div className="overflow-x-auto my-8 shadow-lg rounded-lg">
       <table className="table-auto w-full bg-black text-white">
@@ -26,9 +32,13 @@ const SalesTable: React.FC<SalesTableProps> = ({ data }) => {
           {data.map((transaction) => (
             <tr key={transaction.id} className="hover:bg-gray-900 text-center">
               <td className="py-4 px-6 border-r border-orange-500">{transaction.id}</td>
-              <td className="py-4 px-6 border-r border-orange-500">{new Date(transaction.date).toLocaleDateString()}</td>
+              <td className="py-4 px-6 border-r border-orange-500">
+                {new Date(transaction.transactionDate).toLocaleDateString()}
+              </td>
               <td className="py-4 px-6 border-r border-orange-500">{transaction.shopId}</td>
-              <td className="py-4 px-6 border-r border-orange-500">${transaction.total}</td>
+              <td className="py-4 px-6 border-r border-orange-500">
+                MYR {transaction.totalAmount}
+              </td>
               <td className="py-4 px-6">{transaction.paymentMethod}</td>
             </tr>
           ))}
